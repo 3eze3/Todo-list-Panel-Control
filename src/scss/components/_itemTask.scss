@@ -47,7 +47,6 @@
     transition: transform 0.2s ease-in;
     @include layout.flex($gap: 0);
     &--logo {
-      pointer-events: none;
       filter: brightness(0.94);
       transition: filter 0.2s ease-in;
     }

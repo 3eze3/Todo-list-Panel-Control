@@ -1,12 +1,48 @@
 @use "../abtract/variables" as bg_colors_size;
 @use "../abtract/mixins" as layout;
 
-    // &--all {
-    //   color: bg_colors_size.$gray;
-    //   @include layout.text-shadow(rgba(71, 92, 95, 0.407));
-    // }
+.panel {
+  position: fixed;
+  top: 1.6rem;
+  right: 1rem;
+  width: 38%;
+  @include layout.media() {
+    width: 95%;
+    top: 38rem;
+    right: 0.8rem;
+  }
+  &__wrapper {
+    display: none;
+    @include layout.media() {
+      @include layout.flex($gap: 0);
+    }
+  }
 
-    // &--completed {
-    //   color: bg_colors_size.$dark;
-    //   @include layout.text-shadow(rgba(22, 33, 22, 0.753));
-    // }
+  &__open {
+    width: 3rem;
+    background-color: transparent;
+    transform: rotate(0deg);
+  }
+
+  &__close {
+    transform: rotate(180deg);
+  }
+
+  &__progress {
+    background-color: bg_colors_size.$bg-soft-dark;
+    border-radius: bg_colors_size.$rem-1;
+    box-shadow: bg_colors_size.$shadow-off-white;
+    position: absolute;
+    width: 100%;
+    @include layout.media() {
+      bottom: -14rem;
+      left: 0;
+      transition: transform 0.25s ease-in;
+    }
+
+    &--active {
+      transform: translateY(-19rem);
+      transition: transform 0.25s ease-in;
+    }
+  }
+}

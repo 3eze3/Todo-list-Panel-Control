@@ -2,7 +2,7 @@
 @use "../abtract/mixins" as layout;
 .storage {
   position: relative;
-  margin-top: 5rem;
+  margin-top: 3rem;
 
   &__completed {
     margin-bottom: bg_colors_size.$rem-0-7;

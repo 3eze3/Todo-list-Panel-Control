@@ -1,0 +1,16 @@
+@use "../abtract/variables" as bg_colors_size;
+@use "../abtract/mixins" as layout;
+.progress {
+    padding: 1rem  1.25rem;
+  &__tasks {
+    font-size: 1.25em;
+    color: bg_colors_size.$dark;
+    letter-spacing: 0.09em;
+    line-height: 1.7em;
+    &--count {
+      color: bg_colors_size.$gray;
+    }
+  }
+
+
+}
