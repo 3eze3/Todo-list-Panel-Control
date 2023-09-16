@@ -6,7 +6,8 @@
 @use "layout/header";
 // Componentes
 @use "components/form";
-@use "components/itemTask.scss";
+@use "components/itemTask";
 @use "components/update";
-// @use "components/panelControl.scss";
-// @use "components/storage";
+@use "components/panelControl";
+@use 'components/panelProgress';
+@use "components/storage";
