@@ -1,0 +1,12 @@
+@use "../abtract/variables" as bg_colors_size;
+@use "../abtract/mixins" as layout;
+
+    // &--all {
+    //   color: bg_colors_size.$gray;
+    //   @include layout.text-shadow(rgba(71, 92, 95, 0.407));
+    // }
+
+    // &--completed {
+    //   color: bg_colors_size.$dark;
+    //   @include layout.text-shadow(rgba(22, 33, 22, 0.753));
+    // }

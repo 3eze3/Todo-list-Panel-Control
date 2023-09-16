@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script type="module" src="js/main.js" defer></script>
+    <title>Todo List</title>
+  </head>
+  <body>
+    <!--  -->
+    <main class="container">
+      <header class="container__header header">
+        <h1 class="header__title" aria-label="Todo list">Todo list</h1>
+        <form action="#" class="header__form form">
+          <div class="form__wrapper">
+            <input
+              type="text"
+              id="task"
+              class="form__task"
+              aria-required="true"
+              aria-label="New task"
+              required />
+            <label for="task" class="form__label"> New task</label>
+          </div>
+          <button
+            class="form__button"
+            id="add-task"
+            aria-label="Add task Button">
+            ADD
+          </button>
+        </form>
+      </header>
+      <section class="container__task task" aria-label="all">
+        <ul class="task__list"></ul>
+      </section>
+      <div class="container__update update">
+        <form action="#" class="update__form">
+          <label class="update__label">
+            <input
+              type="text"
+              class="update__input"
+              placeholder="Update your taks..." />
+          </label>
+          <button class="update__button" id="update">Ok!</button>
+        </form>
+      </div>
+    </main>
+    <!-- <section class="panel" style="outline: solid red 1px">
+      <div class="panel__wrapper">
+        <h2 class="panel__title">Panel de Tareas </h2>
+        <button
+          class="panel__open"
+          id="open-panel"
+          aria-label="open panel tasks">
+          <img
+            class="panel__logo"
+            src="./asessts/images/open-logo.svg"
+            alt="imagen-button"
+            aria-hidden="true" />
+        </button>
+      </div>
+      <section class="panel__progress">
+
+        <div class="progress__list">
+          <p class="progress__item">
+            Active Task:
+            <span class="progress__item progress__item--all" id="active">
+              0
+            </span>
+          </p>
+          <p class="progress__item">
+            Completed:
+            <span
+              class="progress__item progress__item--completed"
+              id="completed">
+              0
+            </span>
+          </p>
+        </div>
+      </section>
+    </section> -->
+
+    <!--
+      
+      <section class="progress__storage storage">
+        <div class="storage__completed">
+          <p class="storage__tasks">
+            You’ve finished
+            <b class="storage__tasks storage__tasks--completed">80%</b>
+            of your tasks
+          </p>
+        </div>
+        <div class="storage__container">
+          <div class="storage__grafic">
+            <div class="storage__status"></div>
+          </div>
+          <div class="storage__limit">
+            <span class="storage__flag">0%</span>
+            <span class="storege__flag">100%</span>
+          </div>
+        </div>
+        <div class="storage__less">
+          <p class="storage__tasks">
+            <b class="storage__tasks storage__tasks--less">20%</b> left
+          </p>
+        </div>
+      </section> -->
+  </body>
+</html>

@@ -1,0 +1,44 @@
+@use "../abtract/mixins" as layout;
+@use "../abtract/variables" as bg_colors_size;
+.form {
+  height: 100%;
+  @include layout.flex($justify: space-between, $gap: 1rem);
+
+  &__wrapper {
+    border-radius: 3px;
+    flex: 86%;
+    position: relative;
+  }
+
+  &__task {
+    min-height: 3rem;
+    width: 100%;
+    padding-top: 0.45rem;
+    outline: solid #0004 1px;
+    color: bg_colors_size.$soft-dark;
+  }
+
+  &__label {
+    top: calc(50% - 6.5px);
+    left: 1.5rem;
+    pointer-events: none;
+    position: absolute;
+    transition: 0.1s ease-in;
+    &--active {
+      top: -0.1rem;
+      left: 0.71rem;
+      transform: scale(0.7);
+      transition: 0.1s ease-in;
+    }
+  }
+
+  &__button {
+    border-radius: 3px;
+    padding: bg_colors_size.$pd_0-9rem_2rem;
+    flex: 10%;
+    &:hover {
+      background-color: bg_colors_size.$bg-soft-cyan;
+      transition: background-color 0.2s ease-in;
+    }
+  }
+}

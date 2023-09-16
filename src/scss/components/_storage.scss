@@ -1,0 +1,51 @@
+@use "../abtract/variables" as bg_colors_size;
+@use "../abtract/mixins" as layout;
+.storage {
+  position: relative;
+  margin-top: 5rem;
+
+  &__completed {
+    margin-bottom: bg_colors_size.$rem-0-7;
+  }
+
+  &__tasks {
+    font-size: bg_colors_size.$rg;
+    color: rgb(44, 46, 44);
+    &--completed {
+      color: bg_colors_size.$dark;
+    }
+    &--less {
+      color: bg_colors_size.$gray;
+    }
+  }
+
+  &__grafic {
+    border-radius: bg_colors_size.$rem-1;
+    background-image: bg_colors_size.$bg-linear-soft-white;
+    margin-bottom: bg_colors_size.$rem-0-7;
+    height: bg_colors_size.$rem-1;
+  }
+
+  &__status {
+    border-radius: bg_colors_size.$rem-1;
+    background-color: bg_colors_size.$white;
+    height: 100%;
+    width: 20%;
+  }
+
+  &__limit {
+    @include layout.flex($justify: space-between);
+  }
+
+  &__less {
+    background-color: bg_colors_size.$bg-dark-gray;
+    clip-path: polygon(0 6%, 100% 6%, 100% 31%, 100% 45%, 85% 31%, 0 31%);
+    position: absolute;
+    right: bg_colors_size.$rem-0-5;
+    top: -3.5rem;
+    line-height: 4rem;
+    text-align: center;
+    width: 9rem;
+    height: 10rem;
+  }
+}

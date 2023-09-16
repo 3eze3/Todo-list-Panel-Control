@@ -1,0 +1,12 @@
+// Reset all tags
+@use "base/reset";
+@use "base/fonts";
+// Layout
+@use "layout/container";
+@use "layout/header";
+// Componentes
+@use "components/form";
+@use "components/itemTask.scss";
+@use "components/update";
+// @use "components/panelControl.scss";
+// @use "components/storage";

@@ -1,0 +1,44 @@
+// ------------------------- Colors -------------------------
+$gray: #5e5e5e;
+$white: #fff;
+$soft-dark: rgba(0, 0, 0, 0.67);
+$bronw: #4d5048;
+$dark: rgb(22, 33, 22);
+// ------------------------- Bg-colors -------------------------
+$bg-linear-sofWhite-blue: linear-gradient(180deg, #eed, #aad, #7989);
+$bg-linear-soft-white: linear-gradient(
+  90deg,
+  rgb(219, 215, 215),
+  rgb(170, 176, 176)
+);
+$bg-off-cyan: #84adbb93;
+$bg-soft-cyan: #84adbbe5;
+$bg-soft-dark: rgba(255, 255, 255, 0.076);
+$bg-off-gray: rgb(221, 228, 228);
+$bg-off-dark: #ffffff12;
+$bg-dark-gray: #fffcfc4c;
+$bg-red-sotf: rgba(255, 0, 0, 0.531);
+$bg-dark: rgba(0, 0, 0, 0.16);
+$bg-gray-blush: #eae8e8bd;
+// ------------------------- Sh-box -------------------------
+$shadow-off-white: 0.4rem 0.35rem 0.8rem hsla(0, 0%, 100%, 0.322),
+  -0.1rem -0.1rem 0.4rem #0004;
+$shadow-dark-gray: 0.08rem 0.08rem 0.09rem rgba(255, 255, 255, 0.315) inset,
+  -0.06rem -0.06rem 0.09rem #575454 inset;
+$shadow-gray: 0.1rem 0.1rem 0.25rem rgba(0, 0, 0, 0.323) inset,
+  -0.1rem -0.2rem 0.15rem #9d9c9cbf inset, 0.1rem 0.2rem 0.25rem #ffffff48 inset;
+// ------------------------- General-size -------------------------
+$rem-1: 1rem;
+$rem-1-5: 1.5rem;
+$rem-0-5: 0.5rem;
+$rem-0-7: 0.7rem;
+$rem-0-9: 0.9rem;
+$pd_0-7rem_1rem: 0.7rem 1rem;
+$pd_0-9rem_2rem: 0.9rem 1rem;
+$pd_1_5rem: 1.5rem;
+$percent-80: 80%;
+$percent-90: 90%;
+// ------------------------- Font-size -------------------------
+$lg: 2.4em;
+$rg: 1.1em;
+$spacing: 0.09em;

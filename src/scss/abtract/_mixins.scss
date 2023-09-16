@@ -1,0 +1,17 @@
+@mixin flex($aling: center, $justify: center, $direction: row, $gap: 1.5rem) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $aling;
+  justify-content: $justify;
+  gap: $gap;
+}
+
+@mixin media($break: 780px) {
+  @media screen and (width <= $break) {
+    @content;
+  }
+}
+
+@mixin text-shadow($color) {
+  text-shadow: 0.01rem 0.01rem 0.1rem $color;
+}
