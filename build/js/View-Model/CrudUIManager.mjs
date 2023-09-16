@@ -115,10 +115,10 @@ export class TaskUIManger {
             </div>
             <div class="task__wrapper task__wrapper--options">
               <button class="task__options task__options--update" arial-label='edit your tasks button'>️
-                  <img src='./asessts/images/edit-log.svg' aria-hidden=true class="task__options--logo">
+                  <img src='./asessts/images/edit-log.svg' aria-hidden="true" class="task__options--logo">
               </button>
               <button class="task__options task__options--delete" arial-label='remove your tasks button'>
-                  <img src='./asessts/images/remove-log.svg' aria-hidden=true class="task__options--logo">
+                  <img src='./asessts/images/remove-log.svg' aria-hidden="true" class="task__options--logo">
               ️</button>
             </div>
           </li>`;
