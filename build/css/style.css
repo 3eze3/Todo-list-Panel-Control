@@ -404,13 +404,13 @@ button {
 }
 @media screen and (width <= 780px) {
   .panel__progress {
-    bottom: -14rem;
+    bottom: -16em;
     left: 0;
     transition: transform 0.25s ease-in;
   }
 }
 .panel__progress--active {
-  transform: translateY(-19rem);
+  transform: translateY(-21rem);
   transition: transform 0.25s ease-in;
 }
 
