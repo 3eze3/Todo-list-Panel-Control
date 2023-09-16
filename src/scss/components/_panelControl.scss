@@ -35,13 +35,13 @@
     position: absolute;
     width: 100%;
     @include layout.media() {
-      bottom: -14rem;
+      bottom: -16em;
       left: 0;
       transition: transform 0.25s ease-in;
     }
 
     &--active {
-      transform: translateY(-19rem);
+      transform: translateY(-21rem);
       transition: transform 0.25s ease-in;
     }
   }
