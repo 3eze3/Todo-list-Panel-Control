@@ -19,9 +19,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   hyphens: manual;
-  padding:bg_colors_size.$pd_1_5rem;
+  padding: bg_colors_size.$pd_1_5rem;
   @include layout.media() {
-    padding: 0.6rem;
+    padding: 0.5rem 0.5rem 3.75rem 0.5rem;
   }
 }
 
@@ -47,12 +47,12 @@ button {
   cursor: pointer;
   color: bg_colors_size.$white;
   font-family: regular_light;
-  transition:0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
 }
 
 ::-webkit-scrollbar {
   width: 0.7rem;
-    background-color: bg_colors_size.$bg-gray-blush;
+  background-color: bg_colors_size.$bg-gray-blush;
 }
 
 ::-webkit-scrollbar-thumb {
