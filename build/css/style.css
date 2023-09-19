@@ -376,8 +376,8 @@ button {
 @media screen and (width <= 820px) {
   .panel {
     width: 95%;
-    top: 38rem;
-    right: 0.8rem;
+    top: 33rem;
+    right: 0.6rem;
   }
 }
 .panel__wrapper {
@@ -385,10 +385,11 @@ button {
 }
 @media screen and (width <= 820px) {
   .panel__wrapper {
+    height: 4rem;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 0;
   }
 }
@@ -410,13 +411,13 @@ button {
 @media screen and (width <= 820px) {
   .panel__progress {
     background-color: rgba(190, 210, 222, 0.894);
-    bottom: -19em;
+    bottom: -21rem;
     left: 0;
     transition: transform 0.25s ease-in;
   }
 }
 .panel__progress--active {
-  transform: translateY(-23rem);
+  transform: translateY(-26rem);
   transition: transform 0.25s ease-in;
 }
 
