@@ -79,8 +79,11 @@
     letter-spacing: 0.1em;
   }
 
-  &__item--remove {
+  &__item--active {
     animation: fade-out 0.5s forwards;
+    @include layout.media() {
+      animation-duration: 0.35s;
+    }
   }
 }
 
