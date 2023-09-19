@@ -8,13 +8,14 @@
   width: 38%;
   @include layout.media() {
     width: 95%;
-    top: 38rem;
-    right: 0.8rem;
+    top: 33rem;
+    right: 0.6rem;
   }
   &__wrapper {
     display: none;
     @include layout.media() {
-      @include layout.flex($gap: 0);
+      height: 4rem;
+      @include layout.flex($justify:flex-end, $gap: 0);
     }
   }
 
@@ -36,13 +37,13 @@
     width: 100%;
     @include layout.media() {
       background-color: rgba(190, 210, 222, 0.894);
-      bottom: -19em;
+      bottom: -21rem;
       left: 0;
       transition: transform 0.25s ease-in;
     }
 
     &--active {
-      transform: translateY(-23rem);
+      transform: translateY(-26rem);
       transition: transform 0.25s ease-in;
     }
   }
