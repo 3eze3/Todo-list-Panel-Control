@@ -1,3 +1,4 @@
+import { ListTodo } from "../Model/TypeList.mjs";
 import { Crud } from "../Model/crud.mjs";
 export class TaskUIManger {
   private $listElement = document.querySelector("ul") as HTMLUListElement;
@@ -8,6 +9,7 @@ export class TaskUIManger {
 
   constructor(crud: Crud) {
     this.modelCrud = crud;
+    this.getNotify();
     this.printTaks();
   }
 
@@ -19,18 +21,17 @@ export class TaskUIManger {
   };
 
   createTask() {
-    const { text } = this.modelCrud.create();
-    this.addTemplateToList(text);
+    const { text, id } = this.modelCrud.create();
+    this.addTemplateToList(text, id);
   }
 
   private delete() {
-    const $indexListItem = this.getIndexOfListItem(this.selectedListItem);
-    this.modelCrud.delete($indexListItem);
-    this.animationRemoveElement(this.selectedListItem);
-  }
-
-  private getCurrentDesription($element: HTMLLIElement) {
-    return $element.querySelector(".task__description") as HTMLElement;
+    const taskId = parseInt(this.selectedListItem.dataset.id as string);
+    if (taskId) {
+      this.addAnimation(this.selectedListItem);
+      this.removeItem(this.selectedListItem);
+      this.modelCrud.delete(taskId);
+    }
   }
 
   private update() {
@@ -53,12 +54,22 @@ export class TaskUIManger {
     this.$form.classList.remove("update--active");
   };
 
+  private getCurrentDesription($element: HTMLLIElement) {
+    return $element.querySelector(".task__description") as HTMLElement;
+  }
+
   private setUpdateText($updateText: string) {
-    const indexListItem = this.getIndexOfListItem(this.selectedListItem);
+    const taskId = parseInt(this.selectedListItem.dataset.id as string);
     const $currentSpan = this.getCurrentDesription(this.selectedListItem);
     const updateSpan = this.createElementSpan($updateText);
-    this.modelCrud.update(indexListItem, $updateText);
+    this.modelCrud.update(taskId, $updateText);
     $currentSpan.replaceWith(updateSpan);
+  }
+
+  private completed() {
+    const taskId = parseInt(this.selectedListItem.dataset.id as string);
+    this.addAnimation(this.selectedListItem);
+    this.modelCrud.completed(taskId);
   }
 
   private addHandlerButtons = () => {
@@ -69,23 +80,25 @@ export class TaskUIManger {
         this.delete();
       if (targetEvent.classList.contains("task__options--update"))
         this.update();
-      if (targetEvent.classList.contains("task__check")) this.completed();
+      if (targetEvent.classList.contains("task__check")) {
+        this.completed();
+      }
     });
   };
 
-  private completed() {
-    const indexListItem = this.getIndexOfListItem(this.selectedListItem);
-    this.modelCrud.completed(indexListItem, true);
-    this.animationRemoveElement(this.selectedListItem);
+  private getNotify() {
+    document.addEventListener("finishedTasks", () => {
+      while (this.$listElement.firstChild) {
+        this.$listElement.removeChild(this.$listElement.firstChild);
+      }
+    });
   }
 
   private printTaks() {
-    const tasksSaved = this.modelCrud.loadTasksFromLocalStorage();
-    if (tasksSaved) {
-      tasksSaved.forEach(tasks => {
-        this.addTemplateToList(tasks.text);
-      });
-    }
+    const tasksSaved = this.modelCrud.loadUncompletedTasks() as [];
+    tasksSaved.forEach((tasks: ListTodo) => {
+      this.addTemplateToList(tasks.text, tasks.id);
+    });
     this.addHandlerButtons();
   }
 
@@ -107,29 +120,27 @@ export class TaskUIManger {
     return $element === "";
   }
 
-  private getIndexOfListItem($listItem: HTMLElement) {
-    const $childrenOfList = Array.from(this.$listElement?.children || []);
-    return $childrenOfList.indexOf($listItem);
-  }
-
   private getListItem($element: HTMLElement) {
     return $element.closest("li") as HTMLLIElement;
   }
 
-  private animationRemoveElement($element: HTMLLIElement) {
+  private addAnimation($element: HTMLElement) {
+    $element.classList.add("task__item--active");
+  }
+
+  private removeItem($element: HTMLLIElement) {
     try {
-      $element.classList.add("task__item--remove");
       $element.addEventListener("animationend", () =>
-        this.$listElement?.removeChild($element)
+        this.$listElement.removeChild($element)
       );
     } catch (error) {
-      console.log("El erro es ", error);
+      console.log(error);
     }
   }
 
-  private createTemplateTask(descriptionTask: string) {
+  private createTemplateTask(descriptionTask: string, id: number) {
     return `
-         <li class="task__item">
+         <li class="task__item" data-id="${id}">
             <div class="task__wrapper">
               <input type="checkbox" class="task__check" />
               <div class="task__content">
@@ -147,8 +158,8 @@ export class TaskUIManger {
           </li>`;
   }
 
-  private addTemplateToList(descriptionTask: string): void {
-    const templateItemTask = this.createTemplateTask(descriptionTask);
+  private addTemplateToList(descriptionTask: string, id: number): void {
+    const templateItemTask = this.createTemplateTask(descriptionTask, id);
     this.$listElement?.insertAdjacentHTML("beforeend", templateItemTask);
   }
 }
