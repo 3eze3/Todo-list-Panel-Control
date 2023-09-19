@@ -35,13 +35,14 @@
     position: absolute;
     width: 100%;
     @include layout.media() {
-      bottom: -16em;
+      background-color: rgba(190, 210, 222, 0.894);
+      bottom: -19em;
       left: 0;
       transition: transform 0.25s ease-in;
     }
 
     &--active {
-      transform: translateY(-21rem);
+      transform: translateY(-23rem);
       transition: transform 0.25s ease-in;
     }
   }
