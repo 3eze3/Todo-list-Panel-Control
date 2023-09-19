@@ -29,49 +29,59 @@ export class TaskUIManger {
                     this.delete();
                 if (targetEvent.classList.contains("task__options--update"))
                     this.update();
-                if (targetEvent.classList.contains("task__check"))
+                if (targetEvent.classList.contains("task__check")) {
                     this.completed();
+                }
             });
         };
         this.modelCrud = crud;
+        this.getNotify();
         this.printTaks();
     }
     createTask() {
-        const { text } = this.modelCrud.create();
-        this.addTemplateToList(text);
+        const { text, id } = this.modelCrud.create();
+        this.addTemplateToList(text, id);
     }
     delete() {
-        const $indexListItem = this.getIndexOfListItem(this.selectedListItem);
-        this.modelCrud.delete($indexListItem);
-        this.animationRemoveElement(this.selectedListItem);
-    }
-    getCurrentDesription($element) {
-        return $element.querySelector(".task__description");
+        const taskId = parseInt(this.selectedListItem.dataset.id);
+        if (taskId) {
+            this.addAnimation(this.selectedListItem);
+            this.removeItem(this.selectedListItem);
+            this.modelCrud.delete(taskId);
+        }
     }
     update() {
         this.$form.classList.add("update--active");
         const $btnConfirm = this.$form.querySelector(".update__button");
         $btnConfirm.addEventListener("click", this.handleOKButtonClick);
     }
+    getCurrentDesription($element) {
+        return $element.querySelector(".task__description");
+    }
     setUpdateText($updateText) {
-        const indexListItem = this.getIndexOfListItem(this.selectedListItem);
+        const taskId = parseInt(this.selectedListItem.dataset.id);
         const $currentSpan = this.getCurrentDesription(this.selectedListItem);
         const updateSpan = this.createElementSpan($updateText);
-        this.modelCrud.update(indexListItem, $updateText);
+        this.modelCrud.update(taskId, $updateText);
         $currentSpan.replaceWith(updateSpan);
     }
     completed() {
-        const indexListItem = this.getIndexOfListItem(this.selectedListItem);
-        this.modelCrud.completed(indexListItem, true);
-        this.animationRemoveElement(this.selectedListItem);
+        const taskId = parseInt(this.selectedListItem.dataset.id);
+        this.addAnimation(this.selectedListItem);
+        this.modelCrud.completed(taskId);
+    }
+    getNotify() {
+        document.addEventListener("finishedTasks", () => {
+            while (this.$listElement.firstChild) {
+                this.$listElement.removeChild(this.$listElement.firstChild);
+            }
+        });
     }
     printTaks() {
-        const tasksSaved = this.modelCrud.loadTasksFromLocalStorage();
-        if (tasksSaved) {
-            tasksSaved.forEach(tasks => {
-                this.addTemplateToList(tasks.text);
-            });
-        }
+        const tasksSaved = this.modelCrud.loadUncompletedTasks();
+        tasksSaved.forEach((tasks) => {
+            this.addTemplateToList(tasks.text, tasks.id);
+        });
         this.addHandlerButtons();
     }
     createElementSpan(text) {
@@ -87,26 +97,23 @@ export class TaskUIManger {
     isEmpy($element) {
         return $element === "";
     }
-    getIndexOfListItem($listItem) {
-        var _a;
-        const $childrenOfList = Array.from(((_a = this.$listElement) === null || _a === void 0 ? void 0 : _a.children) || []);
-        return $childrenOfList.indexOf($listItem);
-    }
     getListItem($element) {
         return $element.closest("li");
     }
-    animationRemoveElement($element) {
+    addAnimation($element) {
+        $element.classList.add("task__item--active");
+    }
+    removeItem($element) {
         try {
-            $element.classList.add("task__item--remove");
-            $element.addEventListener("animationend", () => { var _a; return (_a = this.$listElement) === null || _a === void 0 ? void 0 : _a.removeChild($element); });
+            $element.addEventListener("animationend", () => this.$listElement.removeChild($element));
         }
         catch (error) {
-            console.log("El erro es ", error);
+            console.log(error);
         }
     }
-    createTemplateTask(descriptionTask) {
+    createTemplateTask(descriptionTask, id) {
         return `
-         <li class="task__item">
+         <li class="task__item" data-id="${id}">
             <div class="task__wrapper">
               <input type="checkbox" class="task__check" />
               <div class="task__content">
@@ -123,9 +130,9 @@ export class TaskUIManger {
             </div>
           </li>`;
     }
-    addTemplateToList(descriptionTask) {
+    addTemplateToList(descriptionTask, id) {
         var _a;
-        const templateItemTask = this.createTemplateTask(descriptionTask);
+        const templateItemTask = this.createTemplateTask(descriptionTask, id);
         (_a = this.$listElement) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML("beforeend", templateItemTask);
     }
 }
