@@ -1,3 +1,4 @@
+import { Form } from "../Components/form.mjs";
 import { ListTodo } from "../Model/TypeList.mjs";
 import { Crud } from "../Model/crud.mjs";
 export class TaskUIManger {
@@ -6,9 +7,11 @@ export class TaskUIManger {
   private $form = document.querySelector(".update") as HTMLElement;
   private selectedListItem!: HTMLLIElement;
   private modelCrud!: Crud;
+  private styleInput!: Form;
 
-  constructor(crud: Crud) {
+  constructor(crud: Crud, componentInput: Form) {
     this.modelCrud = crud;
+    this.styleInput = componentInput;
     this.getNotify();
     this.printTaks();
   }
@@ -17,6 +20,7 @@ export class TaskUIManger {
     this.$addButtonElement?.addEventListener("click", event => {
       event.preventDefault();
       this.createTask();
+      this.styleInput.clearInput();
     });
   };
 
@@ -140,9 +144,9 @@ export class TaskUIManger {
 
   private createTemplateTask(descriptionTask: string, id: number) {
     return `
-         <li class="task__item" data-id="${id}">
+         <li class="task__item" data-id="${id}" aria-label="Item tasks">
             <div class="task__wrapper">
-              <input type="checkbox" class="task__check" />
+              <input type="checkbox" class="task__check" aria-label="Check your tasks" />
               <div class="task__content">
                 <span class="task__description">${descriptionTask}</span>
               </div>
