@@ -11,11 +11,20 @@
     top: 33rem;
     right: 0.6rem;
   }
+
+  &__title {
+    overflow: hidden;
+    position: absolute;
+    height: 1px;
+    top: 0;
+    width: 1px;
+  }
+
   &__wrapper {
     display: none;
     @include layout.media() {
       height: 4rem;
-      @include layout.flex($justify:flex-end, $gap: 0);
+      @include layout.flex($justify: flex-end, $gap: 0);
     }
   }
 
