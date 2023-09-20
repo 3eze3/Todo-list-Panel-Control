@@ -77,6 +77,10 @@ export class Crud {
     return this.$inputElement.value.trim();
   }
 
+  setText(value: string) {
+    this.$inputElement.value = value;
+  }
+
   private getCompletedTasks() {
     return this.savedTaskList.filter(tasks => tasks.completed);
   }
