@@ -10,7 +10,7 @@
   <body>
     <main class="container">
       <header class="container__header header">
-        <h1 class="header__title" aria-label="Todo list">Todo list</h1>
+        <h1 class="header__title" aria-label="App Todo list">Todo list</h1>
         <form action="#" class="header__form form">
           <div class="form__wrapper">
             <input
@@ -18,19 +18,20 @@
               id="task"
               class="form__task"
               aria-required="true"
-              aria-label="New task"
+              aria-label="Enter your new task"
               required />
             <label for="task" class="form__label"> New task</label>
           </div>
           <button
             class="form__button"
             id="add-task"
-            aria-label="Add task Button">
+            aria-label="Button to add yout task">
             ADD
           </button>
         </form>
       </header>
-      <section class="container__task task" aria-label="all">
+      <section class="container__task task">
+        <h2 class="panel__title" aria-label="All tasks section">All tasks section</h2>
         <ul class="task__list"></ul>
       </section>
       <div class="container__update update">
@@ -43,12 +44,11 @@
           </label>
           <button class="update__button" id="update">Ok!</button>
         </form>
-      </div>
+      </div >
     </main>
     <section class="panel">
-      <!--  -->
+      <h3 class="panel__title">Panel of your tasks</h3>
       <div class="panel__wrapper">
-        <!-- <h2 class="panel__title">Panel de Tareas</h2> -->
         <button
           class="panel__open"
           id="btn-panel"
@@ -59,8 +59,8 @@
             aria-hidden="true" />
         </button>
       </div>
-      <!--  -->
       <section class="panel__progress progress">
+        <h3 class="panel__title">Counts tasks</h3>
         <div class="progress__container">
           <p class="progress__tasks">
             Active:
@@ -75,6 +75,7 @@
         </div>
 
         <section class="progress__storage storage">
+          <h3 class="panel__title">Progres to finished the tasks</h3>
           <div class="storage__completed">
             <p class="storage__tasks">
               You’ve finished
