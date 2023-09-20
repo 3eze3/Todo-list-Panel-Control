@@ -1,5 +1,5 @@
 export class TaskUIManger {
-    constructor(crud) {
+    constructor(crud, componentInput) {
         this.$listElement = document.querySelector("ul");
         this.$addButtonElement = document.getElementById("add-task");
         this.$form = document.querySelector(".update");
@@ -8,6 +8,7 @@ export class TaskUIManger {
             (_a = this.$addButtonElement) === null || _a === void 0 ? void 0 : _a.addEventListener("click", event => {
                 event.preventDefault();
                 this.createTask();
+                this.styleInput.clearInput();
             });
         };
         this.handleOKButtonClick = (event) => {
@@ -35,6 +36,7 @@ export class TaskUIManger {
             });
         };
         this.modelCrud = crud;
+        this.styleInput = componentInput;
         this.getNotify();
         this.printTaks();
     }
@@ -113,9 +115,9 @@ export class TaskUIManger {
     }
     createTemplateTask(descriptionTask, id) {
         return `
-         <li class="task__item" data-id="${id}">
+         <li class="task__item" data-id="${id}" aria-label="Item tasks">
             <div class="task__wrapper">
-              <input type="checkbox" class="task__check" />
+              <input type="checkbox" class="task__check" aria-label="Check your tasks" />
               <div class="task__content">
                 <span class="task__description">${descriptionTask}</span>
               </div>
