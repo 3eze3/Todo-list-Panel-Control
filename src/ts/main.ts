@@ -11,8 +11,8 @@ class Client {
     const styleInput = new Form();
     styleInput.styleWriteInput();
     const crud = new Crud();
-    const task = new TaskUIManger(crud);
     const panel = new Panel(crud);
+    const task = new TaskUIManger(crud, styleInput);
     task.addTask();
   }
 }
