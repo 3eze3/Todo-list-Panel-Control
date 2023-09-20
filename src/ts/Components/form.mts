@@ -1,6 +1,7 @@
 export class Form {
   private $input = document.getElementById("task") as HTMLInputElement;
   private $label = document.querySelector(".form__label");
+  private $addButtonElement = document.getElementById("add-task");
 
   private isEmpy() {
     return this.$input.value !== "";
@@ -10,7 +11,13 @@ export class Form {
     this.$label?.classList.toggle("form__label--active", this.isEmpy());
   }
 
-  styleWriteInput(): void {
+  public clearInput(): void {
+    this.$input.value = "";
+    this.$label?.classList.remove("form__label--active");
+    this.$input.blur();
+  }
+
+  public styleWriteInput(): void {
     this.$input.addEventListener("input", () => this.ajustLabel());
   }
 }
