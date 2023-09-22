@@ -1,0 +1,57 @@
+@use "../abtract/mixins" as layout;
+@use "../abtract/variables" as colors;
+.finished {
+  width: 30rem;
+  min-height: 7rem;
+  position: absolute;
+  right: 1rem;
+  bottom: 12rem;
+  @include layout.flex($justify: flex-start);
+  padding-inline: 1rem 5.7rem;
+  background-color: colors.$bg-gray-dark;
+  box-shadow: colors.$shadow-white;
+  border-radius: 15px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-3rem);
+  transition: opacity 0.2s ease-in-out 0.1s, transform 0.6s ease-in;
+  &--active {
+    animation: move-out 0.5s both;
+  }
+  @include layout.media() {
+    width: 90%;
+    min-height: 7rem;
+  }
+  &__logo {
+    width: 5rem;
+    height: fit-content;
+    transform: translateY(9rem);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    &--active {
+      right: 0.5rem;
+      bottom: 9.5rem;
+      transition: 0.5s ease-in 0.6s;
+    }
+  }
+
+  &__description {
+    font-size: 1.4em;
+    line-height: 1.2em;
+    letter-spacing: 0.09em;
+    color: #fff;
+    text-shadow: 0.1rem 0.1rem 0.2rem #0004;
+    @include layout.media() {
+      font-size: 1.25em;
+    }
+  }
+}
+
+@keyframes move-out {
+  to {
+    transform: translateY(2rem);
+    opacity: 1;
+    display: flex;
+  }
+}
