@@ -64,7 +64,6 @@ export class Panel {
     this.status.style.width = `${0}%`;
     this.modelCrud.deleteAllTaks();
     setTimeout(() => {
-      console.log("hola");
       this.boxFinished?.classList.add("finished--active");
       this.roket?.classList.add("finished__logo--active");
     }, 500);
