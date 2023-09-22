@@ -12,6 +12,9 @@ export class Panel {
     ".storage__tasks--less"
   ) as HTMLElement;
 
+  private boxFinished = document.querySelector(".finished");
+  private roket = document.querySelector(".finished__logo");
+
   private modelCrud!: Crud;
 
   constructor(crud: Crud) {
@@ -30,6 +33,10 @@ export class Panel {
       const uncomplteTasks = list.filter((tasks: ListTodo) => !tasks.completed);
       const sizeActiveTasks = uncomplteTasks.length.toString();
       this.setActiveTask(sizeActiveTasks);
+      this.setPercentFinished();
+      this.setPercentLeft();
+      this.boxFinished?.classList.remove("finished--active");
+      this.roket?.classList.remove("finished__logo--active");
     });
 
     document.addEventListener("completed", event => {
@@ -56,7 +63,11 @@ export class Panel {
     this.percentLeftText.textContent = `${100}%`;
     this.status.style.width = `${0}%`;
     this.modelCrud.deleteAllTaks();
-    alert("Haz acabado todas tus tareas!, proximamente caja con estilo.");
+    setTimeout(() => {
+      console.log("hola");
+      this.boxFinished?.classList.add("finished--active");
+      this.roket?.classList.add("finished__logo--active");
+    }, 500);
   }
 
   loadCountActiveTasks() {
