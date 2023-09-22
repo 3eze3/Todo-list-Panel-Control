@@ -11,16 +11,6 @@ export class TaskUIManger {
                 this.styleInput.clearInput();
             });
         };
-        this.handleOKButtonClick = (event) => {
-            event.preventDefault();
-            const $updateText = this.getUpdateDescription();
-            if (this.isEmpy($updateText)) {
-                this.$form.classList.remove("update--active");
-                throw "No se admiten valores vacíos";
-            }
-            this.setUpdateText($updateText);
-            this.$form.classList.remove("update--active");
-        };
         this.addHandlerButtons = () => {
             var _a;
             (_a = this.$listElement) === null || _a === void 0 ? void 0 : _a.addEventListener("click", event => {
@@ -35,6 +25,21 @@ export class TaskUIManger {
                 }
             });
         };
+        this.handleOKButtonClick = (event) => {
+            event.preventDefault();
+            const $updateText = this.getUpdateDescription();
+            const $currentSpan = this.getCurrentDesription(this.selectedListItem);
+            if (this.isEmpy($updateText)) {
+                this.$form.classList.remove("update--active");
+                throw "No se admiten valores vacíos";
+            }
+            if ($updateText === $currentSpan.textContent) {
+                this.$form.classList.remove("update--active");
+                return;
+            }
+            this.setUpdateText($updateText);
+            this.$form.classList.remove("update--active");
+        };
         this.modelCrud = crud;
         this.styleInput = componentInput;
         this.getNotify();
@@ -44,6 +49,18 @@ export class TaskUIManger {
         const { text, id } = this.modelCrud.create();
         this.addTemplateToList(text, id);
     }
+    update() {
+        this.$form.classList.add("update--active");
+        const $btnConfirm = this.$form.querySelector(".update__button");
+        const $currentSpan = this.getCurrentDesription(this.selectedListItem);
+        this.setInputUpdate($currentSpan.textContent || "");
+        $btnConfirm.addEventListener("click", this.handleOKButtonClick);
+    }
+    completed() {
+        const taskId = parseInt(this.selectedListItem.dataset.id);
+        this.addAnimation(this.selectedListItem);
+        this.modelCrud.completed(taskId);
+    }
     delete() {
         const taskId = parseInt(this.selectedListItem.dataset.id);
         if (taskId) {
@@ -51,11 +68,6 @@ export class TaskUIManger {
             this.removeItem(this.selectedListItem);
             this.modelCrud.delete(taskId);
         }
-    }
-    update() {
-        this.$form.classList.add("update--active");
-        const $btnConfirm = this.$form.querySelector(".update__button");
-        $btnConfirm.addEventListener("click", this.handleOKButtonClick);
     }
     getCurrentDesription($element) {
         return $element.querySelector(".task__description");
@@ -67,51 +79,12 @@ export class TaskUIManger {
         this.modelCrud.update(taskId, $updateText);
         $currentSpan.replaceWith(updateSpan);
     }
-    completed() {
-        const taskId = parseInt(this.selectedListItem.dataset.id);
-        this.addAnimation(this.selectedListItem);
-        this.modelCrud.completed(taskId);
-    }
-    getNotify() {
-        document.addEventListener("finishedTasks", () => {
-            while (this.$listElement.firstChild) {
-                this.$listElement.removeChild(this.$listElement.firstChild);
-            }
-        });
-    }
     printTaks() {
         const tasksSaved = this.modelCrud.loadUncompletedTasks();
         tasksSaved.forEach((tasks) => {
             this.addTemplateToList(tasks.text, tasks.id);
         });
         this.addHandlerButtons();
-    }
-    createElementSpan(text) {
-        const span = document.createElement("span");
-        span.className = "task__description";
-        span.textContent = text;
-        return span;
-    }
-    getUpdateDescription() {
-        const $input = this.$form.querySelector(".update__input");
-        return $input.value.trim();
-    }
-    isEmpy($element) {
-        return $element === "";
-    }
-    getListItem($element) {
-        return $element.closest("li");
-    }
-    addAnimation($element) {
-        $element.classList.add("task__item--active");
-    }
-    removeItem($element) {
-        try {
-            $element.addEventListener("animationend", () => this.$listElement.removeChild($element));
-        }
-        catch (error) {
-            console.log(error);
-        }
     }
     createTemplateTask(descriptionTask, id) {
         return `
@@ -136,5 +109,43 @@ export class TaskUIManger {
         var _a;
         const templateItemTask = this.createTemplateTask(descriptionTask, id);
         (_a = this.$listElement) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML("beforeend", templateItemTask);
+    }
+    createElementSpan(text) {
+        const span = document.createElement("span");
+        span.className = "task__description";
+        span.textContent = text;
+        return span;
+    }
+    setInputUpdate($currentSpan) {
+        const $input = this.$form.querySelector(".update__input");
+        $input.value = $currentSpan;
+    }
+    getUpdateDescription() {
+        const $input = this.$form.querySelector(".update__input");
+        return $input.value.trim();
+    }
+    getListItem($element) {
+        return $element.closest("li");
+    }
+    getNotify() {
+        document.addEventListener("finishedTasks", () => {
+            while (this.$listElement.firstChild) {
+                this.$listElement.removeChild(this.$listElement.firstChild);
+            }
+        });
+    }
+    isEmpy($element) {
+        return $element === "";
+    }
+    addAnimation($element) {
+        $element.classList.add("task__item--active");
+    }
+    removeItem($element) {
+        try {
+            $element.addEventListener("animationend", () => this.$listElement.removeChild($element));
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 }

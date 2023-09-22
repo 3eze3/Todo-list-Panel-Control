@@ -5,6 +5,8 @@ export class Panel {
         this.status = document.querySelector(".storage__status");
         this.percentText = document.querySelector(".storage__tasks--completed");
         this.percentLeftText = document.querySelector(".storage__tasks--less");
+        this.boxFinished = document.querySelector(".finished");
+        this.roket = document.querySelector(".finished__logo");
         this.modelCrud = crud;
         this.getNotify();
         this.loadCountActiveTasks();
@@ -14,11 +16,16 @@ export class Panel {
     }
     getNotify() {
         document.addEventListener("active", event => {
+            var _a, _b;
             const notify = event;
             const list = notify.detail.information;
             const uncomplteTasks = list.filter((tasks) => !tasks.completed);
             const sizeActiveTasks = uncomplteTasks.length.toString();
             this.setActiveTask(sizeActiveTasks);
+            this.setPercentFinished();
+            this.setPercentLeft();
+            (_a = this.boxFinished) === null || _a === void 0 ? void 0 : _a.classList.remove("finished--active");
+            (_b = this.roket) === null || _b === void 0 ? void 0 : _b.classList.remove("finished__logo--active");
         });
         document.addEventListener("completed", event => {
             const notify = event;
@@ -42,7 +49,11 @@ export class Panel {
         this.percentLeftText.textContent = `${100}%`;
         this.status.style.width = `${0}%`;
         this.modelCrud.deleteAllTaks();
-        alert("Haz acabado todas tus tareas!, proximamente caja con estilo.");
+        setTimeout(() => {
+            var _a, _b;
+            (_a = this.boxFinished) === null || _a === void 0 ? void 0 : _a.classList.add("finished--active");
+            (_b = this.roket) === null || _b === void 0 ? void 0 : _b.classList.add("finished__logo--active");
+        }, 500);
     }
     loadCountActiveTasks() {
         const tasksSaved = this.modelCrud.loadUncompletedTasks();

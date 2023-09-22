@@ -1,0 +1,3 @@
+class dragDropItems {
+}
+export {};
