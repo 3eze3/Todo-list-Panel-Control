@@ -24,9 +24,39 @@ export class TaskUIManger {
     });
   };
 
+  private addHandlerButtons = () => {
+    this.$listElement?.addEventListener("click", event => {
+      const targetEvent = event.target as HTMLButtonElement;
+      this.selectedListItem = this.getListItem(targetEvent);
+      if (targetEvent.classList.contains("task__options--delete"))
+        this.delete();
+      if (targetEvent.classList.contains("task__options--update"))
+        this.update();
+      if (targetEvent.classList.contains("task__check")) {
+        this.completed();
+      }
+    });
+  };
+
   createTask() {
     const { text, id } = this.modelCrud.create();
     this.addTemplateToList(text, id);
+  }
+
+  private update() {
+    this.$form.classList.add("update--active");
+    const $btnConfirm = this.$form.querySelector(
+      ".update__button"
+    ) as HTMLElement;
+    const $currentSpan = this.getCurrentDesription(this.selectedListItem);
+    this.setInputUpdate($currentSpan.textContent || "");
+    $btnConfirm.addEventListener("click", this.handleOKButtonClick);
+  }
+
+  private completed() {
+    const taskId = parseInt(this.selectedListItem.dataset.id as string);
+    this.addAnimation(this.selectedListItem);
+    this.modelCrud.completed(taskId);
   }
 
   private delete() {
@@ -38,22 +68,19 @@ export class TaskUIManger {
     }
   }
 
-  private update() {
-    this.$form.classList.add("update--active");
-    const $btnConfirm = this.$form.querySelector(
-      ".update__button"
-    ) as HTMLElement;
-
-    $btnConfirm.addEventListener("click", this.handleOKButtonClick);
-  }
-
   private handleOKButtonClick = (event: Event) => {
     event.preventDefault();
     const $updateText = this.getUpdateDescription();
+    const $currentSpan = this.getCurrentDesription(this.selectedListItem);
     if (this.isEmpy($updateText)) {
       this.$form.classList.remove("update--active");
       throw "No se admiten valores vacíos";
     }
+    if ($updateText === $currentSpan.textContent) {
+      this.$form.classList.remove("update--active");
+      return;
+    }
+
     this.setUpdateText($updateText);
     this.$form.classList.remove("update--active");
   };
@@ -70,76 +97,12 @@ export class TaskUIManger {
     $currentSpan.replaceWith(updateSpan);
   }
 
-  private completed() {
-    const taskId = parseInt(this.selectedListItem.dataset.id as string);
-    this.addAnimation(this.selectedListItem);
-    this.modelCrud.completed(taskId);
-  }
-
-  private addHandlerButtons = () => {
-    this.$listElement?.addEventListener("click", event => {
-      const targetEvent = event.target as HTMLButtonElement;
-      this.selectedListItem = this.getListItem(targetEvent);
-      if (targetEvent.classList.contains("task__options--delete"))
-        this.delete();
-      if (targetEvent.classList.contains("task__options--update"))
-        this.update();
-      if (targetEvent.classList.contains("task__check")) {
-        this.completed();
-      }
-    });
-  };
-
-  private getNotify() {
-    document.addEventListener("finishedTasks", () => {
-      while (this.$listElement.firstChild) {
-        this.$listElement.removeChild(this.$listElement.firstChild);
-      }
-    });
-  }
-
   private printTaks() {
     const tasksSaved = this.modelCrud.loadUncompletedTasks() as [];
     tasksSaved.forEach((tasks: ListTodo) => {
       this.addTemplateToList(tasks.text, tasks.id);
     });
     this.addHandlerButtons();
-  }
-
-  private createElementSpan(text: string) {
-    const span = document.createElement("span");
-    span.className = "task__description";
-    span.textContent = text;
-    return span;
-  }
-
-  private getUpdateDescription() {
-    const $input = this.$form.querySelector(
-      ".update__input"
-    ) as HTMLInputElement;
-    return $input.value.trim();
-  }
-
-  isEmpy($element: string) {
-    return $element === "";
-  }
-
-  private getListItem($element: HTMLElement) {
-    return $element.closest("li") as HTMLLIElement;
-  }
-
-  private addAnimation($element: HTMLElement) {
-    $element.classList.add("task__item--active");
-  }
-
-  private removeItem($element: HTMLLIElement) {
-    try {
-      $element.addEventListener("animationend", () =>
-        this.$listElement.removeChild($element)
-      );
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   private createTemplateTask(descriptionTask: string, id: number) {
@@ -165,5 +128,56 @@ export class TaskUIManger {
   private addTemplateToList(descriptionTask: string, id: number): void {
     const templateItemTask = this.createTemplateTask(descriptionTask, id);
     this.$listElement?.insertAdjacentHTML("beforeend", templateItemTask);
+  }
+
+  private createElementSpan(text: string) {
+    const span = document.createElement("span");
+    span.className = "task__description";
+    span.textContent = text;
+    return span;
+  }
+
+  private setInputUpdate($currentSpan: string) {
+    const $input = this.$form.querySelector(
+      ".update__input"
+    ) as HTMLInputElement;
+    $input.value = $currentSpan;
+  }
+
+  private getUpdateDescription() {
+    const $input = this.$form.querySelector(
+      ".update__input"
+    ) as HTMLInputElement;
+    return $input.value.trim();
+  }
+
+  private getListItem($element: HTMLElement) {
+    return $element.closest("li") as HTMLLIElement;
+  }
+
+  private getNotify() {
+    document.addEventListener("finishedTasks", () => {
+      while (this.$listElement.firstChild) {
+        this.$listElement.removeChild(this.$listElement.firstChild);
+      }
+    });
+  }
+
+  isEmpy($element: string) {
+    return $element === "";
+  }
+
+  private addAnimation($element: HTMLElement) {
+    $element.classList.add("task__item--active");
+  }
+
+  private removeItem($element: HTMLLIElement) {
+    try {
+      $element.addEventListener("animationend", () =>
+        this.$listElement.removeChild($element)
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
