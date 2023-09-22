@@ -20,6 +20,7 @@ $bg-dark-gray: #fffcfc4c;
 $bg-red-sotf: rgba(255, 0, 0, 0.531);
 $bg-dark: rgba(0, 0, 0, 0.16);
 $bg-gray-blush: #eae8e8bd;
+$bg-gray-dark: rgba(236, 242, 244, 0.097);
 // ------------------------- Sh-box -------------------------
 $shadow-off-white: 0.4rem 0.35rem 0.8rem hsla(0, 0%, 100%, 0.322),
   -0.1rem -0.1rem 0.4rem #0004;
@@ -27,6 +28,8 @@ $shadow-dark-gray: 0.08rem 0.08rem 0.09rem rgba(255, 255, 255, 0.315) inset,
   -0.06rem -0.06rem 0.09rem #575454 inset;
 $shadow-gray: 0.1rem 0.1rem 0.25rem rgba(0, 0, 0, 0.323) inset,
   -0.1rem -0.2rem 0.15rem #9d9c9cbf inset, 0.1rem 0.2rem 0.25rem #ffffff48 inset;
+$shadow-white: 0.08rem 0.1rem 0.2rem rgba(3, 3, 3, 0.256),
+  -0.1rem -0.1rem 0.2rem #ffffff58;
 // ------------------------- General-size -------------------------
 $rem-1: 1rem;
 $rem-1-5: 1.5rem;
