@@ -87,6 +87,11 @@
   }
 }
 
+.dragging :where(span, input, button) {
+  opacity: 0.1;
+  background-color: rgba(255, 0, 0, 0.067);
+}
+
 @keyframes fade-out {
   to {
     transform: translateX(-50rem);
