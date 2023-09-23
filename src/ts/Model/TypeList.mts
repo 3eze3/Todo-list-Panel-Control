@@ -1,5 +1,5 @@
 export interface ListTodo {
-  id: number;
+  id: string;
   text: string;
   completed: boolean;
 }
