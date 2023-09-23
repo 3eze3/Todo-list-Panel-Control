@@ -38,6 +38,13 @@ export class TaskUIManger {
     });
   };
 
+  private notifyTasksUI(eventName: string, task: HTMLLIElement[]) {
+    const event = new CustomEvent(eventName, {
+      detail: { information: task },
+    });
+    document.dispatchEvent(event);
+  }
+
   createTask() {
     const { text, id } = this.modelCrud.create();
     this.addTemplateToList(text, id);
@@ -54,13 +61,13 @@ export class TaskUIManger {
   }
 
   private completed() {
-    const taskId = parseInt(this.selectedListItem.dataset.id as string);
+    const taskId = this.selectedListItem.dataset.id as string;
     this.addAnimation(this.selectedListItem);
     this.modelCrud.completed(taskId);
   }
 
   private delete() {
-    const taskId = parseInt(this.selectedListItem.dataset.id as string);
+    const taskId = this.selectedListItem.dataset.id as string;
     if (taskId) {
       this.addAnimation(this.selectedListItem);
       this.removeItem(this.selectedListItem);
@@ -90,7 +97,7 @@ export class TaskUIManger {
   }
 
   private setUpdateText($updateText: string) {
-    const taskId = parseInt(this.selectedListItem.dataset.id as string);
+    const taskId = this.selectedListItem.dataset.id as string;
     const $currentSpan = this.getCurrentDesription(this.selectedListItem);
     const updateSpan = this.createElementSpan($updateText);
     this.modelCrud.update(taskId, $updateText);
@@ -105,9 +112,9 @@ export class TaskUIManger {
     this.addHandlerButtons();
   }
 
-  private createTemplateTask(descriptionTask: string, id: number) {
+  private createTemplateTask(descriptionTask: string, id: string) {
     return `
-         <li class="task__item" data-id="${id}" aria-label="Item tasks">
+         <li class="task__item" data-id="${id}" aria-label="Item tasks" draggable="true">
             <div class="task__wrapper">
               <input type="checkbox" class="task__check" aria-label="Check your tasks" />
               <div class="task__content">
@@ -125,9 +132,15 @@ export class TaskUIManger {
           </li>`;
   }
 
-  private addTemplateToList(descriptionTask: string, id: number): void {
+  public getItems() {
+    return Array.from(this.$listElement.children) as HTMLLIElement[];
+  }
+
+  private addTemplateToList(descriptionTask: string, id: string): void {
     const templateItemTask = this.createTemplateTask(descriptionTask, id);
     this.$listElement?.insertAdjacentHTML("beforeend", templateItemTask);
+    const itemsList = this.getItems();
+    this.notifyTasksUI("add", itemsList);
   }
 
   private createElementSpan(text: string) {
