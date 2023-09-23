@@ -45,6 +45,12 @@ export class TaskUIManger {
         this.getNotify();
         this.printTaks();
     }
+    notifyTasksUI(eventName, task) {
+        const event = new CustomEvent(eventName, {
+            detail: { information: task },
+        });
+        document.dispatchEvent(event);
+    }
     createTask() {
         const { text, id } = this.modelCrud.create();
         this.addTemplateToList(text, id);
@@ -57,12 +63,12 @@ export class TaskUIManger {
         $btnConfirm.addEventListener("click", this.handleOKButtonClick);
     }
     completed() {
-        const taskId = parseInt(this.selectedListItem.dataset.id);
+        const taskId = this.selectedListItem.dataset.id;
         this.addAnimation(this.selectedListItem);
         this.modelCrud.completed(taskId);
     }
     delete() {
-        const taskId = parseInt(this.selectedListItem.dataset.id);
+        const taskId = this.selectedListItem.dataset.id;
         if (taskId) {
             this.addAnimation(this.selectedListItem);
             this.removeItem(this.selectedListItem);
@@ -73,7 +79,7 @@ export class TaskUIManger {
         return $element.querySelector(".task__description");
     }
     setUpdateText($updateText) {
-        const taskId = parseInt(this.selectedListItem.dataset.id);
+        const taskId = this.selectedListItem.dataset.id;
         const $currentSpan = this.getCurrentDesription(this.selectedListItem);
         const updateSpan = this.createElementSpan($updateText);
         this.modelCrud.update(taskId, $updateText);
@@ -88,7 +94,7 @@ export class TaskUIManger {
     }
     createTemplateTask(descriptionTask, id) {
         return `
-         <li class="task__item" data-id="${id}" aria-label="Item tasks">
+         <li class="task__item" data-id="${id}" aria-label="Item tasks" draggable="true">
             <div class="task__wrapper">
               <input type="checkbox" class="task__check" aria-label="Check your tasks" />
               <div class="task__content">
@@ -105,10 +111,15 @@ export class TaskUIManger {
             </div>
           </li>`;
     }
+    getItems() {
+        return Array.from(this.$listElement.children);
+    }
     addTemplateToList(descriptionTask, id) {
         var _a;
         const templateItemTask = this.createTemplateTask(descriptionTask, id);
         (_a = this.$listElement) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML("beforeend", templateItemTask);
+        const itemsList = this.getItems();
+        this.notifyTasksUI("add", itemsList);
     }
     createElementSpan(text) {
         const span = document.createElement("span");
