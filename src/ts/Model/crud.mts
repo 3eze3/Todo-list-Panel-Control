@@ -2,12 +2,17 @@ import { ListTodo } from "./TypeList.mjs";
 export class Crud {
   private $inputElement = document.getElementById("task") as HTMLInputElement;
   private savedTaskList: ListTodo[] = [];
-  private id = 1;
+
+  generarIdUnico() {
+    const array = new Uint32Array(1);
+    window.crypto.getRandomValues(array);
+    return array[0].toString(16);
+  }
 
   public create() {
     const description = this.getText();
     if (description === "") throw "No puedes ingresar datos vacios a la list";
-    const tasksId = this.getUniqueSecuenciaId();
+    const tasksId = this.generarIdUnico();
     const task = { id: tasksId, text: description, completed: false };
     if (this.isActiveTasks(description)) throw "La tarea ya existe..!";
     this.savedTaskList.push(task);
@@ -16,9 +21,9 @@ export class Crud {
     return task;
   }
 
-  public delete(taksId: number): void {
+  public delete(taksId: string): void {
     const indexToDelete = this.savedTaskList.findIndex(
-      tasks => tasks.id == taksId
+      tasks => tasks.id === taksId
     );
     if (indexToDelete !== -1) {
       this.savedTaskList.splice(indexToDelete, 1);
@@ -30,9 +35,9 @@ export class Crud {
     }
   }
 
-  public completed(tasksId: number) {
+  public completed(tasksId: string) {
     const indexToComplted = this.savedTaskList.findIndex(
-      tasks => tasks.id == tasksId
+      tasks => tasks.id === tasksId
     );
     if (indexToComplted !== -1) {
       this.savedTaskList[indexToComplted].completed = true;
@@ -46,9 +51,9 @@ export class Crud {
     }
   }
 
-  public update(tasksId: number, newText: string) {
+  public update(tasksId: string, newText: string) {
     const indexToUpdate = this.savedTaskList.findIndex(
-      tasks => tasks.id == tasksId
+      tasks => tasks.id === tasksId
     );
     if (indexToUpdate !== -1) {
       if (this.isActiveTasks(newText)) throw "La tarea ya existe..!";
@@ -83,10 +88,6 @@ export class Crud {
 
   private getCompletedTasks() {
     return this.savedTaskList.filter(tasks => tasks.completed);
-  }
-
-  private getUniqueSecuenciaId() {
-    return this.id++;
   }
 
   private isActiveTasks(description: string): Boolean {
